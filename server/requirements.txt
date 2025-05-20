@@ -1,0 +1,6 @@
+flask
+flask-login
+flask-wtf
+flask-cors
+psycopg2-binary
+email-validator

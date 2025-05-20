@@ -1,0 +1,69 @@
+CREATE OR REPLACE FUNCTION register_user(
+    in_email VARCHAR(50),
+    in_pwhash TEXT,
+    in_nickname VARCHAR(50),
+    OUT out_id INT,
+    OUT out_error_message TEXT
+) AS $$
+BEGIN
+    INSERT INTO wiki_user (user_email, user_pwhash, user_nickname)
+    VALUES (in_email, in_pwhash, in_nickname)
+    RETURNING user_id INTO out_id;
+
+EXCEPTION
+    WHEN not_null_violation THEN
+        out_error_message := 'Все поля обязательны';
+    WHEN check_violation THEN
+        out_error_message := 'Некорректные данные';
+    WHEN unique_violation THEN
+        out_error_message := 'Email уже занят';
+    WHEN OTHERS THEN
+        out_error_message := 'Ошибка: ' || SQLERRM;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION find_user_by_email(
+    in_email VARCHAR(50),
+    OUT out_id INTEGER,
+    OUT out_email VARCHAR(50),
+    OUT out_nickname VARCHAR(50),
+    OUT out_pwhash TEXT,
+    OUT out_error_message TEXT
+) AS $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM wiki_user WHERE user_email = in_email) THEN
+        out_error_message := 'Пользователь не найден';
+        RETURN;
+    END IF;
+    
+    SELECT user_id, user_email, user_nickname, user_pwhash 
+    INTO out_id, out_email, out_nickname, out_pwhash
+    FROM wiki_user 
+    WHERE user_email = in_email;
+    
+    out_error_message := NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_user(
+	in_id INT,
+	OUT out_id INTEGER,
+    OUT out_email VARCHAR(50),
+    OUT out_nickname VARCHAR(50),
+    OUT out_error_message TEXT
+) AS $$
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM wiki_user WHERE user_id = in_id) THEN
+        out_error_message := 'Пользователь не найден';
+        RETURN;
+    END IF;
+
+	SELECT user_id, user_email, user_nickname
+    INTO out_id, out_email, out_nickname
+    FROM wiki_user 
+    WHERE user_id = in_id;
+
+	out_error_message := NULL;
+END;
+$$ LANGUAGE plpgsql; 

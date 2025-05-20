@@ -1,0 +1,32 @@
+<html>
+  <head>
+    {% if title %}
+      <title>{{ title }} - cdss</title>
+    {% else %}
+      <title>cdss</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>
+      {% if current_user.is_anonymous %}
+        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.register') }}">Register</a>
+      {% else %}
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% endif %}
+    </div>
+    <hr />
+    {% with messages = get_flashed_messages() %} 
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %} 
+    {% endwith %} 
+    
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
