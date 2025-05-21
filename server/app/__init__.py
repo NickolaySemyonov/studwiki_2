@@ -18,4 +18,11 @@ from .endpoints.auth import auth_bp
 app.register_blueprint(users_bp)
 app.register_blueprint(auth_bp)
 
-CORS(app)
+#CORS(app)
+CORS(app, supports_credentials=True, resources={
+    r"/*": {
+        "origins": ["http://localhost:3000"],  # URL вашего React приложения
+        "methods": ["GET", "POST", "PUT", "DELETE"],
+        "allow_headers": ["Content-Type"]
+    }
+})
