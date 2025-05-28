@@ -44,6 +44,7 @@ def login():
     return jsonify({
         'user': {
             'id': user.id,
+            'role': user.role,
             'email': user.email,
             'nickname': user.nickname
         }
@@ -91,6 +92,7 @@ def register():
     return jsonify({
         'user': {
             'id': user.id,
+            'role': user.role,
             'email': user.email,
             'nickname': user.nickname
         }
@@ -104,6 +106,7 @@ def check_auth():
         return jsonify({
             'user': {
                 'id': current_user.id,
+                'role': current_user.role,
                 'email': current_user.email,
                 'nickname': current_user.nickname
             }

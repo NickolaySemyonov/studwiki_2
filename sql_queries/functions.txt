@@ -3,6 +3,7 @@ CREATE OR REPLACE FUNCTION register_user(
     in_pwhash TEXT,
     in_nickname VARCHAR(50),
     OUT out_id INT,
+	OUT out_role VARCHAR(10),
     OUT out_error_message TEXT
 ) AS $$
 BEGIN
@@ -10,6 +11,7 @@ BEGIN
     VALUES (in_email, in_pwhash, in_nickname)
     RETURNING user_id INTO out_id;
 
+	out_role:='user';
 EXCEPTION
     WHEN not_null_violation THEN
         out_error_message := 'Все поля обязательны';
@@ -26,6 +28,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION find_user_by_email(
     in_email VARCHAR(50),
     OUT out_id INTEGER,
+	OUT out_role VARCHAR(10),
     OUT out_email VARCHAR(50),
     OUT out_nickname VARCHAR(50),
     OUT out_pwhash TEXT,
@@ -37,8 +40,8 @@ BEGIN
         RETURN;
     END IF;
     
-    SELECT user_id, user_email, user_nickname, user_pwhash 
-    INTO out_id, out_email, out_nickname, out_pwhash
+    SELECT user_id, user_role, user_email, user_nickname, user_pwhash 
+    INTO out_id, out_role, out_email, out_nickname, out_pwhash
     FROM wiki_user 
     WHERE user_email = in_email;
     
@@ -49,6 +52,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_user(
 	in_id INT,
 	OUT out_id INTEGER,
+	OUT out_role VARCHAR(10),
     OUT out_email VARCHAR(50),
     OUT out_nickname VARCHAR(50),
     OUT out_error_message TEXT
@@ -59,8 +63,8 @@ BEGIN
         RETURN;
     END IF;
 
-	SELECT user_id, user_email, user_nickname
-    INTO out_id, out_email, out_nickname
+	SELECT user_id, user_role, user_email, user_nickname
+    INTO out_id, out_role, out_email, out_nickname
     FROM wiki_user 
     WHERE user_id = in_id;
 

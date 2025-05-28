@@ -6,8 +6,9 @@ from werkzeug.security import generate_password_hash
 
 class User(UserMixin):
     
-    def __init__(self, email: str, nickname: str, id: int = None):
+    def __init__(self, email: str, nickname: str, id: int = None, role:str = None):
         self.id=id
+        self.role=role
         self.email = email
         self.nickname = nickname
         
@@ -16,7 +17,7 @@ class User(UserMixin):
 
     @classmethod
     @psycopg2_cursor(config(), dict_cursor=True)
-    def get(cursor,cls, id: int):
+    def get(cursor, cls, id: int):
         try:
             cursor.execute('SELECT * FROM get_user(%s)', (id,))
             result = cursor.fetchone()
@@ -24,7 +25,8 @@ class User(UserMixin):
                 user = cls(
                     id=result['out_id'],
                     email=result['out_email'],
-                    nickname=result['out_nickname']
+                    nickname=result['out_nickname'],
+                    role=result['out_role']
                 )
                 return user
             else: 
@@ -49,14 +51,13 @@ class User(UserMixin):
                 user = cls(
                     id=result['out_id'],
                     email=email,
-                    nickname=nickname
+                    nickname=nickname,
+                    role=result['out_role']
                 )
                 return user, None
             else:
                 return None, result['out_error_message']
 
-            #return (result['pm_user_id'], None) if not result['pm_error_message'] else (None, result['pm_error_message'])
-        
         except Exception as e:
             return None, str(e)
         
@@ -71,7 +72,8 @@ class User(UserMixin):
                 user = cls(
                     id=result['out_id'],
                     email=result['out_email'],
-                    nickname=result['out_nickname']
+                    nickname=result['out_nickname'],
+                    role=result['out_role']
                 )
                 pwhash = result['out_pwhash']
                 return user, pwhash, None

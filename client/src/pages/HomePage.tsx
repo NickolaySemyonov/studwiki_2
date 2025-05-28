@@ -14,7 +14,7 @@ export const HomePage = () => {
         {/* App Logo/Title */}
         <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
-            Welcome to <span className="text-indigo-400">Our App</span>
+            Welcome to <span className="text-indigo-400">StudWiki</span>
             </h1>
             <p className="text-gray-400 max-w-lg mx-auto">
             The ultimate solution for your needs. Get started by creating an account or signing in.
