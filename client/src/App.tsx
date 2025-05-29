@@ -6,6 +6,8 @@ import { Dashboard } from './pages/Dashboard';
 import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import {Editor} from './pages/Editor'
+
 
 function App() {
   return (
@@ -19,7 +21,13 @@ function App() {
           
           <Route path="/dashboard" element={
               <ProtectedRoute>
-                <Dashboard />
+                <Dashboard/>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/editor" element={
+              <ProtectedRoute>
+                <Editor/>
               </ProtectedRoute>
             }
           />
