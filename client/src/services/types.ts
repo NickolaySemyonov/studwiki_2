@@ -1,4 +1,4 @@
-import type { Delta } from "quill"
+
 
 //#region User-related types
 export interface IUser{
@@ -23,4 +23,13 @@ export interface INewArticle{
     authorId:number, 
     name:string,
     quillDelta:string
+}
+
+export interface IArticleMeta{
+    sectionId:number,
+    name:string
+}
+export interface ISectionMeta{
+    sectionId:number,
+    name:string
 }

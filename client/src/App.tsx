@@ -7,6 +7,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import {Editor} from './pages/Editor'
+import { ArticlesOverview } from './pages/ArticlesOverview';
 
 
 function App() {
@@ -28,6 +29,12 @@ function App() {
           <Route path="/editor" element={
               <ProtectedRoute>
                 <Editor/>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/articles" element={
+              <ProtectedRoute>
+                <ArticlesOverview/>
               </ProtectedRoute>
             }
           />

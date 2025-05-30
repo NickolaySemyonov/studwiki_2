@@ -33,6 +33,10 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <CustomNavLink to="/editor" onClick={() => setSidebarOpen(false) } > 
               <EditIcon/> Editor 
             </CustomNavLink>
+
+            <CustomNavLink to="/articles" onClick={() => setSidebarOpen(false) } > 
+              ... Articles 
+            </CustomNavLink>
           </nav>
         </div>
       </div>
@@ -45,12 +49,16 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <h2 className="text-xl font-bold text-indigo-400">Dashboard</h2>
           </div>
           <nav className="p-4 space-y-2">
-            <CustomNavLink to="/dashboard" onClick={() => setSidebarOpen(false) } > 
+            <CustomNavLink to="/dashboard" > 
               <HomeIcon/> Overview  
             </CustomNavLink>
             
-            <CustomNavLink to="/editor" onClick={() => setSidebarOpen(false) } > 
+            <CustomNavLink to="/editor"> 
               <EditIcon/> Editor 
+            </CustomNavLink>
+
+            <CustomNavLink to="/articles"> 
+              ... Articles 
             </CustomNavLink>
           </nav>
         </aside>

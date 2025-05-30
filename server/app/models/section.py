@@ -24,13 +24,13 @@ class Section():
         except Exception as e:
             return None, str(e)
         
-    # @classmethod
-    # @psycopg2_cursor(config(), dict_cursor=True)
-    # def get_list(cursor,cls):
-    #     try:
-    #         cursor.execute('SELECT * FROM get_section_list()')
-    #         result = cursor.fetchall()
-    #         if not result['out_error_message']:
-    #             ...
-    #     except Exception as e:
-    #         return None, str(e)
+    @classmethod
+    @psycopg2_cursor(config(), dict_cursor=True)
+    def get_list(cursor, cls):
+        try:
+            # cursor.execute('SELECT * FROM get_section_list()')
+            cursor.execute('SELECT * FROM wiki_section')
+            result = cursor.fetchall()
+           
+        except Exception as e:
+            return None, str(e)
