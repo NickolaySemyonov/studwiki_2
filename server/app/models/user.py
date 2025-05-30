@@ -40,7 +40,7 @@ class User(UserMixin):
 
     @classmethod
     @psycopg2_cursor(config(), dict_cursor=True)
-    def register(cursor,cls,  email: str, password: str, nickname: str):
+    def register(cursor, cls, email: str, password: str, nickname: str):
         try:
             pwhash = generate_password_hash(password)
             cursor.execute('SELECT * FROM register_user(%s, %s, %s)', (email, pwhash, nickname))
@@ -63,7 +63,7 @@ class User(UserMixin):
         
     @classmethod
     @psycopg2_cursor(config(), dict_cursor=True)
-    def find_user_by_email( cursor,cls, email):
+    def find_user_by_email(cursor, cls, email):
         try:
             cursor.execute('SELECT * FROM find_user_by_email(%s)', (email,))
             result = cursor.fetchone()

@@ -11,11 +11,11 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['WTF_CSRF_CHECK_DEFAULT'] = False  # Disable CSRF by default
 app.config['WTF_CSRF_ENABLED'] = False  # Or disable completely
 
-from .endpoints import index
-from .endpoints.users import users_bp
+
+from .endpoints.articles import articles_bp
 from .endpoints.auth import auth_bp
 
-app.register_blueprint(users_bp, url_prefix="/api")
+app.register_blueprint(articles_bp, url_prefix="/api.articles")
 app.register_blueprint(auth_bp, url_prefix="/api")
 
 #CORS(app)

@@ -1,9 +1,35 @@
 DROP TABLE wiki_user;
 CREATE TABLE wiki_user (
     user_id SERIAL PRIMARY KEY,
-    user_email VARCHAR(50) NOT NULL UNIQUE CHECK (user_email ~ '^[a-zA-Z0-9._%+-]+@(gmail\.com|mail\.ru)$'),
+    user_email VARCHAR(50) NOT NULL UNIQUE ,
     user_pwhash TEXT NOT NULL,
-    user_nickname VARCHAR(50) NOT NULL CHECK (user_nickname ~ '^[a-zA-Zа-яА-Я0-9._%+-]{3,50}$'),
-    user_role VARCHAR(10) NOT NULL CHECK (user_role IN ('admin', 'moderator', 'user', 'banned'))
+    user_nickname VARCHAR(50) NOT NULL,
+    user_role VARCHAR(10) NOT NULL CHECK (user_role IN ('admin', 'moderator', 'user', 'banned')) DEFAULT 'user'
 );
 
+CREATE TABLE wiki_section (
+    section_id SERIAL PRIMARY KEY,
+    section_name VARCHAR(255) NOT NULL UNIQUE CHECK (section_name ~ '^[a-zA-Zа-яА-Я0-9._%+-]+$')
+);
+
+CREATE TABLE wiki_article(
+	article_id SERIAL PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	section_id INTEGER NOT NULL,
+	article_hidden BOOLEAN NOT NULL DEFAULT FALSE,
+	article_commenting BOOLEAN NOT NULL DEFAULT TRUE,
+	FOREIGN KEY (user_id) REFERENCES wiki_user(user_id),
+    FOREIGN KEY (section_id) REFERENCES wiki_section(section_id)
+
+)
+CREATE TABLE article_version (
+    	version_id SERIAL PRIMARY KEY,
+    	user_id INTEGER NOT NULL,
+    	article_id INTEGER NOT NULL,
+    	version_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    	version_name VARCHAR(120) NOT NULL,
+    	version_markdown TEXT NOT NULL,
+		version_active BOOLEAN NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES wiki_user(user_id),
+	FOREIGN KEY (article_id) REFERENCES wiki_article(article_id)
+);

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CustomBtn } from "../../components/ui/CustomBtn";
 import { CustomNavLink } from "../../components/ui/CustomNavLink";
 import { Footer } from "../../components/ui/Footer";
-import { ExitIcon, HomeIcon, BurgerIcon } from "../../components/ui/Icons";
+import { ExitIcon, HomeIcon, BurgerIcon, EditIcon } from "../../components/ui/Icons";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLogoutMutation } from "../../hooks/authQueries";
 
@@ -29,6 +29,10 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <CustomNavLink to="/dashboard" onClick={() => setSidebarOpen(false) } > 
               <HomeIcon/> Overview  
             </CustomNavLink>
+
+            <CustomNavLink to="/editor" onClick={() => setSidebarOpen(false) } > 
+              <EditIcon/> Editor 
+            </CustomNavLink>
           </nav>
         </div>
       </div>
@@ -44,7 +48,10 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <CustomNavLink to="/dashboard" onClick={() => setSidebarOpen(false) } > 
               <HomeIcon/> Overview  
             </CustomNavLink>
-            {/* Add more nav items as needed */}
+            
+            <CustomNavLink to="/editor" onClick={() => setSidebarOpen(false) } > 
+              <EditIcon/> Editor 
+            </CustomNavLink>
           </nav>
         </aside>
 

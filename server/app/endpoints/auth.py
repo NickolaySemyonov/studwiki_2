@@ -60,7 +60,7 @@ def logout():
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
-    print(request.get_json())  # Добавьте это для отладки
+    #print(request.get_json())  # Добавьте это для отладки
     # Check if user is already authenticated
     if current_user.is_authenticated:
         return jsonify({

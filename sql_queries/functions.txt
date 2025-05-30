@@ -71,3 +71,37 @@ BEGIN
 	out_error_message := NULL;
 END;
 $$ LANGUAGE plpgsql; 
+
+DROP FUNCTION create_article;
+CREATE OR REPLACE FUNCTION create_article(
+	in_author_id INTEGER,
+	in_section_id INTEGER,
+	in_article_name VARCHAR(100),
+	in_quill_delta TEXT,
+	OUT out_article_id INTEGER,
+	OUT out_version_id INTEGER,
+	OUT out_hidden BOOLEAN,
+	OUT out_commenting BOOLEAN,
+	OUT out_version_active BOOLEAN,
+	OUT out_error_message TEXT
+) AS $$
+BEGIN
+	INSERT INTO wiki_article (section_id, user_id) 
+	VALUES (in_section_id, in_author_id)
+	RETURNING article_id, article_hidden, article_commenting 
+	INTO out_article_id, out_hidden, out_commenting;
+
+	INSERT INTO article_version (user_id, article_id, version_name, version_markdown, version_active) 
+	VALUES (in_author_id, out_article_id, in_article_name,in_quill_delta, TRUE)
+	RETURNING version_id, version_active INTO out_version_id, out_version_active;
+
+EXCEPTION
+	WHEN unique_violation THEN
+		out_error_message := 'Статья с таким названием уже существует';	
+	WHEN foreign_key_violation THEN
+		out_error_message := 'Неверный section_id или author_id';
+	WHEN OTHERS THEN
+		out_error_message := 'Ошибка при создании статьи: ' || SQLERRM;
+	
+END;
+$$ LANGUAGE plpgsql;
