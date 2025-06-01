@@ -31,9 +31,9 @@ export const editArticle = async (delta: string, articleId:number): Promise<stri
 
 
 
-export const getArticles = async(sectionId:number): Promise<IArticleMeta[]> => {
-  const response = await axios.get<{articles: IArticleMeta[], error?: string}>(
-    `${baseURL}articles`,
+export const getArticlesMeta = async(sectionId:number): Promise<IArticleMeta[]> => {
+  const response = await axios.get<{articlesMetadata: IArticleMeta[], error?: string}>(
+    `${baseURL}`,
     { 
       params: { section_id: sectionId },
       withCredentials: true 
@@ -42,23 +42,23 @@ export const getArticles = async(sectionId:number): Promise<IArticleMeta[]> => {
   if (response.data.error) {
     throw new Error(response.data.error);
   }
-  return response.data.articles;
+  return response.data.articlesMetadata;
 
 };
-export const getArticle = async(articleId:number): Promise<IArticle> => {
-  const response = await axios.get<{article: IArticle, error?: string}>(
-    `${baseURL}articles`,
-    { 
-      params: { article_id: articleId },
-      withCredentials: true 
-    }
-  );
-  if (response.data.error) {
-    throw new Error(response.data.error);
-  }
-  return response.data.article;
+// export const getArticle = async(articleId:number): Promise<IArticle> => {
+//   const response = await axios.get<{article: IArticle, error?: string}>(
+//     `${baseURL}articles`,
+//     { 
+//       params: { article_id: articleId },
+//       withCredentials: true 
+//     }
+//   );
+//   if (response.data.error) {
+//     throw new Error(response.data.error);
+//   }
+//   return response.data.article;
 
-};
+// };
 
 export const getSections = async(): Promise<ISectionMeta[]> => {
   const response = await axios.get<{sections: ISectionMeta[], error?: string}>(

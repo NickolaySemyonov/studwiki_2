@@ -3,8 +3,8 @@ from utils2 import psycopg2_cursor
 
 class Section():
     
-    def __init__(self, name:str, id:int=None):
-        self.id=id
+    def __init__(self, sectionId:int, name:str):
+        self.sectionId=sectionId
         self.name=name
     
     @classmethod
@@ -28,9 +28,20 @@ class Section():
     @psycopg2_cursor(config(), dict_cursor=True)
     def get_list(cursor, cls):
         try:
-            # cursor.execute('SELECT * FROM get_section_list()')
-            cursor.execute('SELECT * FROM wiki_section')
+            cursor.execute('SELECT * FROM get_section_list()')
             result = cursor.fetchall()
-           
+            
+            if result:
+                sections = []
+                for row in result:
+                    section = cls(
+                        sectionId=row['section_id'],
+                        name=row['section_name']
+                    )
+                    sections.append(section)
+                return sections, None
+            else:
+                return [], None  # Return empty list if no sections found
+                
         except Exception as e:
             return None, str(e)

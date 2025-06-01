@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getArticles, getSections } from "../services/EditorService";
+import { getArticlesMeta, getSections } from "../services/EditorService";
 import type { IArticleMeta } from "../services/types";
 
 export const useSectionsQuery = () => {
@@ -9,17 +9,18 @@ export const useSectionsQuery = () => {
   });
 };
 
-export const useArticlesQuery = (sectionId: number) => {
-  return useQuery<IArticleMeta[], Error>({
-    queryKey: ['articles-section', sectionId], // Include sectionId in query key
-    queryFn: () => getArticles(sectionId), // Pass sectionId to your function
-    enabled: !!sectionId, // Only run query when sectionId exists
+export const useArticlesMetaQuery = (sectionId: number) => {
+  return useQuery<IArticleMeta[]>({
+    queryKey: ['section', sectionId], 
+    queryFn: () => getArticlesMeta(sectionId), 
+    enabled: !!sectionId, 
+    staleTime: 1000 * 30
   });
 };
-export const useArticleQuery = (articleId: number) => {
-  return useQuery<IArticleMeta[], Error>({
-    queryKey: ['articles', articleId], 
-    queryFn: () => getArticles(articleId), 
-    enabled: !!articleId, 
-  });
-};
+// export const useArticleQuery = (articleId: number) => {
+//   return useQuery<IArticleMeta[], Error>({
+//     queryKey: ['articles', articleId], 
+//     queryFn: () => getArticles(articleId), 
+//     enabled: !!articleId, 
+//   });
+// };

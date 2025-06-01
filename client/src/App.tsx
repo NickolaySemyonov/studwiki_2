@@ -7,7 +7,8 @@ import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import {Editor} from './pages/Editor'
-import { ArticlesOverview } from './pages/ArticlesOverview';
+import { ArticlesWrapper } from './pages/wrappers/ArticlesWrapper';
+import { SectionsWrapper } from './pages/wrappers/SectionsWrapper';
 
 
 function App() {
@@ -32,9 +33,15 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/articles" element={
+          <Route path="/sections/:sectionId?" element={
               <ProtectedRoute>
-                <ArticlesOverview/>
+                <SectionsWrapper/>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/articles/:articleId?" element={
+              <ProtectedRoute>
+                <ArticlesWrapper/>
               </ProtectedRoute>
             }
           />

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CustomBtn } from "../../components/ui/CustomBtn";
 import { CustomNavLink } from "../../components/ui/CustomNavLink";
 import { Footer } from "../../components/ui/Footer";
-import { ExitIcon, HomeIcon, BurgerIcon, EditIcon } from "../../components/ui/Icons";
+import { ExitIcon, HomeIcon, BurgerIcon, EditIcon, SectionsIcon } from "../../components/ui/Icons";
 import { useAuth } from "../../contexts/AuthContext";
 import { useLogoutMutation } from "../../hooks/authQueries";
 
@@ -30,13 +30,19 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
               <HomeIcon/> Overview  
             </CustomNavLink>
 
+            <CustomNavLink to="/sections" onClick={() => setSidebarOpen(false) }> 
+              <SectionsIcon/> Sections 
+            </CustomNavLink>
+
             <CustomNavLink to="/editor" onClick={() => setSidebarOpen(false) } > 
               <EditIcon/> Editor 
             </CustomNavLink>
 
-            <CustomNavLink to="/articles" onClick={() => setSidebarOpen(false) } > 
+            {/* <CustomNavLink to="/articles" onClick={() => setSidebarOpen(false) } > 
               ... Articles 
-            </CustomNavLink>
+            </CustomNavLink> */}
+
+            
           </nav>
         </div>
       </div>
@@ -53,13 +59,19 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
               <HomeIcon/> Overview  
             </CustomNavLink>
             
+            <CustomNavLink to="/sections"> 
+              <SectionsIcon/> Sections 
+            </CustomNavLink>
+
             <CustomNavLink to="/editor"> 
               <EditIcon/> Editor 
             </CustomNavLink>
 
-            <CustomNavLink to="/articles"> 
+            {/* <CustomNavLink to="/articles"> 
               ... Articles 
-            </CustomNavLink>
+            </CustomNavLink> */}
+
+            
           </nav>
         </aside>
 

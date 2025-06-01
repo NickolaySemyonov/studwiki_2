@@ -105,3 +105,45 @@ EXCEPTION
 	
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_article_metadata_list(
+	in_section_id INTEGER
+)
+RETURNS TABLE(
+	article_id INTEGER,
+	article_hidden BOOLEAN,
+	section_id INTEGER,
+	author_id INTEGER,
+	author_nickname VARCHAR(50),
+	article_name VARCHAR(120),
+	last_updated TEXT
+) AS $$
+BEGIN
+	RETURN QUERY 
+	SELECT * FROM article_metadata_view
+	WHERE article_metadata_view.section_id = in_section_id;
+	
+	 EXCEPTION WHEN OTHERS THEN
+        RAISE EXCEPTION 'Error retrieving article_metadata list: %', SQLERRM;	
+END; 
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_section_list()
+RETURNS TABLE (
+    section_id INTEGER,
+    section_name VARCHAR
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        s.section_id,
+        s.section_name
+    FROM 
+        wiki_section s
+    ORDER BY 
+        s.section_name;
+    
+    EXCEPTION WHEN OTHERS THEN
+        RAISE EXCEPTION 'Error retrieving section list: %', SQLERRM;
+END;
+$$ LANGUAGE plpgsql;

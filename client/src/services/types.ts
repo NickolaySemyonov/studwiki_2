@@ -26,10 +26,23 @@ export interface INewArticle{
 }
 
 export interface IArticleMeta{
-    sectionId:number,
-    name:string
+    articleName: string,
+    articleId: number,
+    authorNickname: string,
+    hidden: boolean,
+    lastUpdated: string, 
+    sectionId: number,
+    authorId: number
 }
+
 export interface ISectionMeta{
     sectionId:number,
     name:string
+}
+
+export interface SectionsOverviewProps {
+  sectionId?: number;  
+}
+export interface ArticleMetaListProps {
+  sectionId: number;
 }

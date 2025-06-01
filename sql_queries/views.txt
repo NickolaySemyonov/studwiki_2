@@ -1,0 +1,24 @@
+CREATE VIEW article_metadata_view AS
+SELECT 
+    -- Article columns
+    wa.article_id AS article_id,
+	wa.article_hidden AS article_hidden,
+    wa.section_id AS section_id,
+	
+    -- Author/user columns
+	wa.user_id AS author_id,
+    wu.user_nickname AS author_nickname,
+
+	-- Version columns
+	av.version_name AS article_name,
+	to_char(av.version_date , 'YYYY-MM-DD HH24:MI') AS last_updated
+    
+    
+FROM 
+    wiki_article wa
+LEFT JOIN 
+    wiki_user wu ON wa.user_id = wu.user_id
+LEFT JOIN 
+    article_version av ON wa.article_id = av.article_id
+WHERE 
+    av.version_active = TRUE  
