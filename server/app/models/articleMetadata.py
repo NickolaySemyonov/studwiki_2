@@ -8,7 +8,7 @@ class ArticleMetadata():
         authorId:int,
         sectionId:int,
         authorNickname:str,
-        articleName:str,
+        name:str,
         hidden:bool,
         lastUpdated:str
         ):
@@ -17,7 +17,7 @@ class ArticleMetadata():
         self.articleId=articleId
         self.authorId=authorId
         self.authorNickname=authorNickname
-        self.articleName=articleName
+        self.name=name
         self.hidden=hidden
         self.lastUpdated=lastUpdated
 
@@ -37,7 +37,7 @@ class ArticleMetadata():
                         authorId=row['author_id'],
                         sectionId=row['section_id'],
                         authorNickname=row['author_nickname'],
-                        articleName=row['article_name'],
+                        name=row['article_name'],
                         hidden=row['article_hidden'],
                         lastUpdated=row['last_updated']
                     )

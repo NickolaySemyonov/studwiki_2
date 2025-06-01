@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 import type { INewArticle } from '../services/types';
 
-export const Editor: React.FC = () => {
+export const CreateArticlePage: React.FC = () => {
   const{user} = useAuth()
   const editorRef = useRef<TextEditorHandle>(null);
   const {mutate: createArticle, isPending, isError, error,isSuccess, data} = useCreateArticleMutation();
@@ -32,7 +32,7 @@ export const Editor: React.FC = () => {
   };
 
   return (
-    <MainLayout>
+    <>
       <h1 className="text-2xl font-bold mb-4">Article Editor</h1>
 
         <label htmlFor="article-name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -95,6 +95,6 @@ export const Editor: React.FC = () => {
           </div>
         )}
       </div>
-    </MainLayout>
+    </>
   );
 };

@@ -7,6 +7,7 @@ interface TextEditorProps {
   value?: string | Delta;
   onChange?: (content: string, delta: Delta, source: string) => void;
   placeholder?: string;
+  readOnly?:boolean;
 }
 
 export interface TextEditorHandle {
@@ -16,7 +17,8 @@ export interface TextEditorHandle {
 }
 
 const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
-  ({ value = '', onChange, placeholder = 'Write something...' }, ref) => {
+  ({ value = '', onChange, placeholder = 'Write something...', readOnly = false }, ref) => {
+    const [editorReadOnly, setEditorReadOnly] = React.useState(readOnly);
     const [editorValue, setEditorValue] = React.useState(value);
     const quillRef = React.useRef<ReactQuill>(null);
 
@@ -30,6 +32,9 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
     React.useEffect(() => {
       setEditorValue(value);
     }, [value]);
+    React.useEffect(() => {
+      setEditorReadOnly(readOnly);
+    }, [readOnly]);
 
     const handleChange = (content: string, delta: Delta, source: string, editor: ReactQuill.UnprivilegedEditor) => {
       setEditorValue(content);
@@ -73,6 +78,7 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
         modules={modules}
         formats={formats}
         placeholder={placeholder}
+        readOnly={editorReadOnly}
       />
     );
   }

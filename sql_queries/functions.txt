@@ -147,3 +147,57 @@ BEGIN
         RAISE EXCEPTION 'Error retrieving section list: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION get_current_article(
+	in_article_id INTEGER,
+	OUT out_section_id INTEGER,
+    OUT out_article_id INTEGER,
+    OUT out_article_hidden BOOLEAN,
+    OUT out_article_commenting BOOLEAN,
+    OUT out_author_id INTEGER,
+    OUT out_author_nickname VARCHAR(50),
+ 	OUT out_last_editor_id INTEGER,
+    OUT out_last_editor_nickname VARCHAR(50),
+    OUT out_article_name VARCHAR(120),
+    OUT out_article_markdown TEXT,
+    OUT out_last_updated TEXT,
+	OUT out_err_message TEXT
+) AS $$
+BEGIN
+	out_err_message:=NULL;
+	
+	SELECT 
+		section_id, 
+		article_id, 
+		article_hidden, 
+		article_commenting, 
+		author_id, 
+		author_nickname,
+		last_editor_id,
+	    last_editor_nickname,
+	    article_name,
+	    article_markdown,
+	    last_updated
+	INTO 
+		out_section_id,
+	    out_article_id,
+	    out_article_hidden,
+	    out_article_commenting,
+	    out_author_id,
+	    out_author_nickname,
+	 	out_last_editor_id,
+	    out_last_editor_nickname,
+	    out_article_name,
+	    out_article_markdown,
+	    out_last_updated
+	FROM article_displayed_view
+	WHERE article_id=in_article_id;
+
+EXCEPTION 
+	WHEN OTHERS THEN
+		out_err_message := 'Ошибка при получении статьи: ' || SQLERRM;
+	
+END;
+$$ LANGUAGE plpgsql;

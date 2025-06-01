@@ -31,14 +31,12 @@ def create_article():
 def get_article():
 
     article_id = request.args.get('article_id', type=int)
-
     if not article_id:
         return jsonify({
-            'error': 'section_id parameter is required'
+            'error': 'article_id parameter is required'
         }), 400
 
     article, err_message = ArticleCurrent.get(article_id)
- 
     if err_message:
         return jsonify({'error': err_message }), 500
 
@@ -47,3 +45,30 @@ def get_article():
         'message':'success'
     })
     
+
+
+@articles_bp.route('/edit',methods=['POST'])
+def edit_article():
+
+    # article_id = request.args.get('article_id', type=int)
+    # if not article_id:
+    #     return jsonify({
+    #         'error': 'article_id parameter is required'
+    #     }), 400
+    data = request.get_json()
+
+    err_message = Article.edit(
+        articleId=data['articleId'], 
+        sectionId=data['sectionId'],
+        editorId=data['lastEditorId'],
+        name=data['name'],
+        quillDelta=data['quillDelta'],
+        hidden=data['hidden'],
+        commenting=data['commenting']
+    )
+
+    if err_message:
+        print(err_message)
+        return jsonify({"error": err_message}), 400
+    
+    return jsonify({'message': 'success'})

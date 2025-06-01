@@ -10,6 +10,6 @@ export const useArticleQuery = (articleId: number) => {
     queryKey: ['articles', articleId], 
     queryFn: () => getArticle(articleId), 
     enabled: !!articleId, 
-    staleTime: 1000 * 30
+    // staleTime: 1000 * 30
   });
 };

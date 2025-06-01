@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createArticle } from "../services/EditorService";
+import { createArticle, editArticle } from "../services/EditorService";
 
 
 
@@ -20,5 +20,16 @@ export const useCreateArticleMutation = () => {
     // onError: (error) => {
     //   console.error('Error creating article:', error);
     // }
+  });
+};
+
+export const useEditArticleMutation = (articleId:number) => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: editArticle,
+    onSuccess: (message) => {
+      queryClient.invalidateQueries({queryKey:['articles', articleId]})
+    },
   });
 };

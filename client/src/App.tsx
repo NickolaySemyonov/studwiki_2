@@ -6,9 +6,9 @@ import { Dashboard } from './pages/Dashboard';
 import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import {Editor} from './pages/Editor'
 import { ArticlesWrapper } from './pages/wrappers/ArticlesWrapper';
 import { SectionsWrapper } from './pages/wrappers/SectionsWrapper';
+import { EditorWrapper } from './pages/wrappers/EditorWrapper';
 
 
 function App() {
@@ -27,9 +27,9 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/editor" element={
+          <Route path="/editor/:articleId?" element={
               <ProtectedRoute>
-                <Editor/>
+                <EditorWrapper/>
               </ProtectedRoute>
             }
           />

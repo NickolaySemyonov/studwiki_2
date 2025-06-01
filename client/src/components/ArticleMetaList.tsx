@@ -52,7 +52,7 @@ export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) =>
           <div className="flex justify-between items-start">
             <div>
               <h3 className="font-medium text-lg text-gray-800">
-                {article.articleName}
+                {article.name}
                 {article.hidden && (
                   <span className="ml-2 text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">
                     Hidden

@@ -12,6 +12,7 @@ class ArticleCurrent():
         lastEditorId:int,
         authorNickname:str,
         lastEditorNickname:str,
+        name:str,
         quillDelta:str,
         lastUpdated:str,
         hidden:bool, 
@@ -24,6 +25,7 @@ class ArticleCurrent():
         self.lastEditorId=lastEditorId
         self.authorNickname=authorNickname
         self.lastEditorNickname=lastEditorNickname 
+        self.name=name
         self.quillDelta=quillDelta       
         self.lastUpdated=lastUpdated
         self.hidden=hidden
@@ -43,7 +45,8 @@ class ArticleCurrent():
                     authorId=result['out_author_id'],
                     lastEditorId=result['out_last_editor_id'],
                     authorNickname=result['out_author_nickname'],
-                    lastEditorNickname=result['out_last_editor_nickname'] ,
+                    lastEditorNickname=result['out_last_editor_nickname'],
+                    name=result['out_article_name'],
                     quillDelta=result['out_article_markdown'],     
                     lastUpdated=result['out_last_updated'],
                     hidden=result['out_article_hidden'],

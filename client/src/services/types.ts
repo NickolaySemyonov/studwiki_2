@@ -21,7 +21,7 @@ export interface ISectionMeta{
     name:string
 }
 export interface IArticleMeta{
-    articleName:string,
+    name:string,
     articleId:number,
     authorNickname:string,
     hidden:boolean,
@@ -31,7 +31,7 @@ export interface IArticleMeta{
 }
 //#endregion
 
-//#region 
+//#region Article-related types
 export interface INewArticle{
     sectionId:number,
     authorId:number, 
@@ -44,5 +44,15 @@ export interface IArticle extends IArticleMeta{
     lastEditorId:number,
     lastEditorNickname:string,
     quillDelta:string
+}
+
+export interface IArticleEdit{
+    articleId:number,
+    sectionId:number
+    lastEditorId:number,
+    name:string,
+    quillDelta:string,
+    commenting:boolean,
+    hidden:boolean
 }
 //#endregion

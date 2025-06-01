@@ -2,6 +2,7 @@ import React from 'react';
 import { useArticleQuery } from '../hooks/articleQueries';
 import { ReadonlyTextEditor } from '../components/ReadonlyTextEditor';
 import { Delta } from 'quill';
+import { CustomLink } from '../components/ui/CustomLink';
 
 
 interface ArticleViewerProps{
@@ -30,21 +31,25 @@ export const ArticleViewer: React.FC<ArticleViewerProps> = ({articleId}) => {
 
   return (
     <div className="article-container">
-      <h1>{article.articleName}</h1>
+      <h1>{article.name}</h1>
       <div className="article-meta">
-        <span>By {article.authorNickname}</span>
-        <span>Last updated: {new Date(article.lastUpdated).toLocaleDateString()}</span>
+        <span className='mr-3'>By {article.authorNickname}</span>
+        <span className='mr-3'>Last updated: {new Date(article.lastUpdated).toLocaleDateString()}</span>
         {article.lastEditorNickname && (
           <span>Last edited by: {article.lastEditorNickname}</span>
         )}
       </div>
 
-      <div className="article-content bg-gray-200">
+      <div className="article-content bg-gray-200 text-black">
         <ReadonlyTextEditor
           value={deltaContent}
           theme="snow"
         />
       </div>
+      <CustomLink to={`/editor/${articleId}`}>
+        Edit
+      
+      </CustomLink>
 
       {article.commenting && (
         <div className="comments-section">

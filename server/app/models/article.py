@@ -51,3 +51,15 @@ class Article():
             
         except Exception as e:
             return None, None, str(e)
+
+
+    @classmethod
+    @psycopg2_cursor(config(), dict_cursor=True)
+    def edit(cursor, cls, articleId:int, sectionId:int, editorId:int, name:str, quillDelta:str, hidden:bool, commenting:bool):
+        try:
+            cursor.execute('CALL edit_article(%s, %s, %s, %s, %s, %s, %s)', 
+                (articleId, sectionId, editorId, name, quillDelta, hidden, commenting))
+            return None
+        
+        except Exception as e:
+            return str(e)
