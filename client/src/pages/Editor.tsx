@@ -12,7 +12,7 @@ export const Editor: React.FC = () => {
   const editorRef = useRef<TextEditorHandle>(null);
   const {mutate: createArticle, isPending, isError, error,isSuccess, data} = useCreateArticleMutation();
 
-  const [articleName, setArticleName]=useState('');
+  const [articleName, setArticleName] = useState('');
 
   const handleSubmit = async () => {
     if (!editorRef.current) return;
@@ -21,25 +21,21 @@ export const Editor: React.FC = () => {
     if (!delta) return;
 
 
-
-
     const newArticle:INewArticle = {
       sectionId:1, 
       authorId: Number(user?.id), 
       name:articleName,
       quillDelta: JSON.stringify(delta)
     }
-     
 
     createArticle(newArticle);
-      
-    
   };
 
   return (
     <MainLayout>
       <h1 className="text-2xl font-bold mb-4">Article Editor</h1>
-      <label htmlFor="article-name" className="block text-sm font-medium text-gray-700 mb-1">
+
+        <label htmlFor="article-name" className="block text-sm font-medium text-gray-700 mb-1">
           Article Name
         </label>
         <input
@@ -49,7 +45,7 @@ export const Editor: React.FC = () => {
           onChange={(e) => setArticleName(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           placeholder="Enter article name"
-          maxLength={100} // Matches your VARCHAR(100) schema
+          maxLength={100} 
         />
         {articleName.length > 80 && (
           <p className="mt-1 text-sm text-gray-500">

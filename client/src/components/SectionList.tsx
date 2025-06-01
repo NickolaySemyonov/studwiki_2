@@ -1,4 +1,4 @@
-import { useSectionsQuery } from "../hooks/articleQueries";
+import { useSectionsQuery } from "../hooks/sectionQueries";
 import type { ISectionMeta } from "../services/types";
 import { CustomLink } from "./ui/CustomLink";
 

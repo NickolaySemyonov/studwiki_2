@@ -22,3 +22,39 @@ LEFT JOIN
     article_version av ON wa.article_id = av.article_id
 WHERE 
     av.version_active = TRUE  
+
+
+
+CREATE OR REPLACE VIEW article_displayed_view AS
+SELECT
+    -- Article columns
+	wa.section_id AS section_id,
+    wa.article_id AS article_id,
+    wa.article_hidden AS article_hidden,
+    wa.article_commenting AS article_commenting,
+    
+    -- Author information
+    wa.user_id AS author_id,
+    author.user_nickname AS author_nickname,
+    
+    -- Last editor information
+    av.user_id AS last_editor_id,
+    editor.user_nickname AS last_editor_nickname,
+    
+    -- Version columns
+    av.version_name AS article_name,
+    av.version_markdown AS article_markdown,
+    to_char(av.version_date, 'YYYY-MM-DD HH24:MI') AS last_updated
+
+FROM 
+    wiki_article wa
+-- Join for author information
+LEFT JOIN 
+    wiki_user author ON wa.user_id = author.user_id
+-- Join for article version
+LEFT JOIN 
+    article_version av ON wa.article_id = av.article_id AND av.version_active = TRUE
+-- Join for last editor information
+LEFT JOIN 
+    wiki_user editor ON av.user_id = editor.user_id;
+

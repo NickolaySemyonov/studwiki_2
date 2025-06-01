@@ -21,7 +21,7 @@ class Article():
         self.commenting=commenting
 
 
-        
+    
     @classmethod
     @psycopg2_cursor(config(), dict_cursor=True)
     def createNew(cursor, cls, sectionId:int, authorId:int, name:str, quillDelta:str):
@@ -35,15 +35,15 @@ class Article():
                     id=result['out_article_id'],
                     authorId=authorId,
                     sectionId=sectionId,
-                    hidden=['out_hidden'],
-                    commenting=['out_commenting']
+                    hidden=result['out_hidden'],
+                    commenting=result['out_commenting']
                 )
                 aricleVersion=ArticleVersion(
-                    id=['out_version_id'],
+                    id=result['out_version_id'],
                     authorId=authorId,
                     name=name,
                     quillDelta=quillDelta,
-                    isActive=['out_version_active']
+                    isActive=result['out_version_active']
                 )
                 return article, aricleVersion, None
             else:

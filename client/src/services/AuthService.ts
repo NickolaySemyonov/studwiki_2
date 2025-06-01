@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { IUser, ICredentials, IRegistrationData} from './types'
 
-const baseURL = 'http://localhost:5000/api/';
+const baseURL = 'http://localhost:5000/api.auth/';
 
 
 

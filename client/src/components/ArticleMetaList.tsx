@@ -1,8 +1,11 @@
 import React from 'react';
-import { useArticlesMetaQuery} from '../hooks/articleQueries'
-import type { ArticleMetaListProps } from '../services/types';
+import { useArticlesMetaQuery} from '../hooks/sectionQueries'
+import { Link } from 'react-router-dom';
 
 
+interface ArticleMetaListProps {
+  sectionId: number;
+}
 
 export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) => {
   const { data: articles, isLoading, error } = useArticlesMetaQuery(sectionId);
@@ -33,6 +36,8 @@ export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) =>
   }
 
   return (
+
+    
     <div className="space-y-4">
       {articles.map((article) => (
         <div 
@@ -42,6 +47,8 @@ export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) =>
           }`}
         
         >
+
+          <Link to={`/articles/${article.articleId}`}>
           <div className="flex justify-between items-start">
             <div>
               <h3 className="font-medium text-lg text-gray-800">
@@ -60,6 +67,11 @@ export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) =>
               Last updated: {new Date(article.lastUpdated).toLocaleDateString()}
             </div>
           </div>
+          
+          </Link>
+
+
+          
         </div>
       ))}
     </div>

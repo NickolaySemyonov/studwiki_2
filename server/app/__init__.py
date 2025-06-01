@@ -14,9 +14,11 @@ app.config['WTF_CSRF_ENABLED'] = False  # Or disable completely
 
 from .endpoints.articles import articles_bp
 from .endpoints.auth import auth_bp
+from .endpoints.sections import sections_bp
 
+app.register_blueprint(sections_bp, url_prefix="/api.sections")
 app.register_blueprint(articles_bp, url_prefix="/api.articles")
-app.register_blueprint(auth_bp, url_prefix="/api")
+app.register_blueprint(auth_bp, url_prefix="/api.auth")
 
 #CORS(app)
 CORS(app, supports_credentials=True, resources={

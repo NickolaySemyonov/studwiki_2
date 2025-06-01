@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { MainLayout } from "../layouts/MainLayout";
+import { ArticleViewer } from "../ArticleViewer";
 
 export const ArticlesWrapper = () => {
   const { articleId } = useParams<{ articleId: string }>();
@@ -10,6 +11,7 @@ export const ArticlesWrapper = () => {
         {parsedArticleId ? (
         <>
           <p>Viewing article ID: {parsedArticleId}</p>
+          <ArticleViewer articleId={parsedArticleId}/>
         </>
         ) : (
         <>
