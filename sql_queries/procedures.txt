@@ -1,0 +1,19 @@
+CREATE OR REPLACE PROCEDURE edit_article(
+	in_article_id INT, 
+	in_section_id INT, 
+	in_editor_id INT, 
+	in_version_name VARCHAR(120), 
+	in_version_markdown TEXT, 
+	in_article_hidden BOOLEAN, 
+	in_article_commenting BOOLEAN
+) AS $$
+BEGIN
+	INSERT INTO article_version (user_id, article_id, version_name, version_markdown)
+	VALUES (in_editor_id, in_article_id, in_version_name, in_version_markdown);
+	
+	UPDATE wiki_article
+	SET article_hidden=in_article_hidden, article_commenting=in_article_commenting
+	WHERE article_id=in_article_id;
+
+END; 
+$$ LANGUAGE plpgsql;

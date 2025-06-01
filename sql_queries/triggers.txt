@@ -1,0 +1,25 @@
+CREATE OR REPLACE FUNCTION update_article_version_status()
+RETURNS TRIGGER AS $$
+BEGIN
+
+    IF EXISTS (
+        SELECT 1
+        FROM article_version
+        WHERE article_id = NEW.article_id
+    ) THEN
+
+        UPDATE article_version
+        SET version_active = false
+        WHERE article_id = NEW.article_id AND version_active = true;
+    END IF;
+
+    NEW.version_active = true;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_article_version_active
+BEFORE INSERT ON article_version
+FOR EACH ROW
+EXECUTE FUNCTION update_article_version_status()
