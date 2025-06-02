@@ -17,3 +17,27 @@ BEGIN
 
 END; 
 $$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE PROCEDURE rollback_to_version(
+	in_version_id INTEGER
+) AS $$
+
+DECLARE 
+	a_id INTEGER;
+BEGIN
+	
+	SELECT article_id INTO a_id
+	FROM article_version 
+	WHERE in_version_id = version_id;
+	
+	UPDATE article_version
+	SET version_active=FALSE
+	WHERE version_active = TRUE AND article_id = a_id;
+
+	UPDATE article_version
+	SET version_active=TRUE
+	WHERE version_id=in_version_id;
+
+END; 
+$$ LANGUAGE plpgsql;

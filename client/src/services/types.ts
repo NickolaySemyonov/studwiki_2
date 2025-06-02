@@ -56,3 +56,14 @@ export interface IArticleEdit{
     hidden:boolean
 }
 //#endregion
+
+export interface IVersionMeta{
+    id:number,
+    date:string,
+    active:boolean
+}
+export interface IVersionData{
+    id:number,
+    name: string,
+    quillDelta:string
+}

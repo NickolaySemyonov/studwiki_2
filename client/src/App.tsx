@@ -9,6 +9,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { ArticlesWrapper } from './pages/wrappers/ArticlesWrapper';
 import { SectionsWrapper } from './pages/wrappers/SectionsWrapper';
 import { EditorWrapper } from './pages/wrappers/EditorWrapper';
+import { VersionWrapper } from './pages/wrappers/VersionWrapper';
 
 
 function App() {
@@ -45,6 +46,13 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/version_mgr/:articleId" element={
+              <ProtectedRoute>
+                <VersionWrapper/>
+              </ProtectedRoute>
+            }
+          />
+            
           <Route path="*" element={<NotFoundPage/>} />
         </Routes>
         </AuthProvider>

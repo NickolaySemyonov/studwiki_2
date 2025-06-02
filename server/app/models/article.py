@@ -63,3 +63,13 @@ class Article():
         
         except Exception as e:
             return str(e)
+        
+    @classmethod
+    @psycopg2_cursor(config(), dict_cursor=True)
+    def rollback_to_version(cursor, cls, versionId:int):
+        try:
+            cursor.execute('CALL rollback_to_version(%s)',(versionId,))
+            return None
+        
+        except Exception as e:
+            return str(e)

@@ -1,6 +1,9 @@
 import { MainLayout } from './layouts/MainLayout';
 import { useArticleQuery } from '../hooks/articleQueries';
 import { EditForm } from './EditForm';
+import { VersionList } from '../components/VersionList';
+import { VersionManager } from './VersionManager';
+import { CustomLink } from '../components/ui/CustomLink';
 
 interface ArticleEditorProps{
     articleId:number
@@ -19,6 +22,9 @@ export const EditArticlePage: React.FC<ArticleEditorProps>= ({articleId}) => {
         <>
             <h1 className="text-2xl font-bold mb-4">Article Editor</h1>
             <EditForm {...article}/>
+
+            <CustomLink to={`/version_mgr/${articleId}`}></CustomLink>
+             {/* <VersionManager articleId={articleId} /> */}
         </>
     );
 };

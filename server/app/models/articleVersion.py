@@ -17,5 +17,3 @@ class ArticleVersion():
         self.quillDelta=quillDelta
         self.isActive=isActive
     
-
-

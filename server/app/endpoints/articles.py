@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify, request
 
+from ..models.versionData import VersionData
+from ..models.versionMetadata import VersionMetadata
 from ..models.articleCurrent import ArticleCurrent
 from ..models.article import Article
 articles_bp = Blueprint('articles', __name__)
@@ -49,12 +51,6 @@ def get_article():
 
 @articles_bp.route('/edit',methods=['POST'])
 def edit_article():
-
-    # article_id = request.args.get('article_id', type=int)
-    # if not article_id:
-    #     return jsonify({
-    #         'error': 'article_id parameter is required'
-    #     }), 400
     data = request.get_json()
 
     err_message = Article.edit(
@@ -72,3 +68,63 @@ def edit_article():
         return jsonify({"error": err_message}), 400
     
     return jsonify({'message': 'success'})
+
+
+@articles_bp.route('/rollback', methods=['POST'])
+def rollback_version():
+  
+    version_id= request.args.get('version_id', type=int)
+    if not version_id:
+        return jsonify({
+            'error': 'version_id parameter is required'
+        }), 400
+    
+    err_message = Article.rollback_to_version(version_id)
+    if err_message:
+        print(err_message)
+        return jsonify({"error": err_message}), 400
+    
+    return jsonify({'message': 'success'})
+
+
+@articles_bp.route('/versions', methods=['GET'])
+def get_versions_metadata():
+
+    article_id = request.args.get('article_id', type=int)
+    if not article_id:
+        return jsonify({
+            'error': 'article_id parameter is required'
+        }), 400
+    
+    versionMetadataList, err_message = VersionMetadata.get_list(article_id)
+    if err_message:
+        return jsonify({"error": err_message}), 500
+
+    metadataList = [versionMetadata.__dict__ for versionMetadata in versionMetadataList]
+    return jsonify({
+        'versionsMetadata': metadataList,
+        "message": "success"  
+    })
+        
+
+
+@articles_bp.route('/version', methods=['GET'])
+def get_version_data():
+    
+    version_id = request.args.get('version_id', type=int)
+    if not version_id:
+        return jsonify({
+            'error': 'article_id parameter is required'
+        }), 400
+    
+    versionData, err_message= VersionData.get_version_data(version_id) 
+
+    if versionData:
+        return jsonify({
+            'version': versionData.__dict__,
+            "message": "success"  
+        })
+    else:
+        return jsonify({
+            "error": err_message
+        }), 500

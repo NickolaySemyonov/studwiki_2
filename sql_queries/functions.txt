@@ -201,3 +201,38 @@ EXCEPTION
 	
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_version_metadata_list(
+	in_article_id INTEGER
+) 
+RETURNS TABLE(
+	version_id INTEGER,
+	version_active BOOLEAN,
+	last_updated TEXT
+) AS $$
+BEGIN
+	RETURN QUERY 
+	SELECT av.version_id , av.version_active, to_char(av.version_date, 'YYYY-MM-DD HH24:MI') last_updated FROM article_version av 
+	WHERE av.article_id=in_article_id;
+	
+EXCEPTION WHEN OTHERS THEN
+	RAISE EXCEPTION 'Error retrieving version_metadata list: %', SQLERRM;	
+
+END; 
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION preview_version(
+	in_version_id INTEGER,
+	OUT out_name VARCHAR(100),
+	OUT out_markdown TEXT
+) AS $$
+BEGIN
+	SELECT version_name, version_markdown
+	INTO out_name, out_markdown
+	FROM article_version
+	WHERE version_id=in_version_id;
+
+END;
+$$ LANGUAGE plpgsql;
+

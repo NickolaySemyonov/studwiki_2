@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { MainLayout } from './layouts/MainLayout';
 import TextEditor from '../components/TextEditor';
 import type { TextEditorHandle } from '../components/TextEditor';
 import { useCreateArticleMutation } from '../hooks/editorQueries';
