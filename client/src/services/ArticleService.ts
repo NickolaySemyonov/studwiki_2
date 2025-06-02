@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { IArticle, IVersionMeta, IVersionData} from "./types";
-import { version } from "react";
 
 const baseURL = 'http://localhost:5000/api.articles/';
 
@@ -47,10 +46,6 @@ export const getVersion = async(versionId:number): Promise<IVersionData> =>{
   }
   return response.data.version;
 }
-
-
-
-
 
 
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useArticlesMetaQuery} from '../hooks/sectionQueries'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 
 interface ArticleMetaListProps {
@@ -10,6 +11,8 @@ interface ArticleMetaListProps {
 export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) => {
   const { data: articles, isLoading, error } = useArticlesMetaQuery(sectionId);
 
+  const {user} = useAuth() 
+ 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -47,7 +50,7 @@ export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) =>
           }`}
         
         >
-
+          {!article.hidden || article.hidden && Number(user?.id)===article.authorId  ?    
           <Link to={`/articles/${article.articleId}`}>
           <div className="flex justify-between items-start">
             <div>
@@ -68,9 +71,9 @@ export const ArticleMetaList: React.FC<ArticleMetaListProps> = ({ sectionId}) =>
             </div>
           </div>
           
-          </Link>
+          </Link>  : <div className='text-gray-800'>article hidden by {article.authorNickname}</div>
 
-
+          }
           
         </div>
       ))}
