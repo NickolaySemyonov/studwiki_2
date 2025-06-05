@@ -23,7 +23,7 @@ export const SectionList: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-200 mb-6">Sections</h2>
+      <h2 className="text-2xl font-bold text-gray-200 mb-6">Просмотр разделов</h2>
       
       {sections?.length ? (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -47,7 +47,7 @@ export const SectionList: React.FC = () => {
               <CustomLink 
                 to={`/sections/${section.sectionId}`}
               > 
-              View Articles 
+              Статьи 
               </CustomLink>
 
 

@@ -12,6 +12,7 @@ export const VersionManager = ({ articleId }: VersionMangerProps) => {
   const { data: article, isLoading: isArticleLoading } = useArticleQuery(articleId);
   const [selectedVersion, setSelectedVersion] = useState<number | null>(null);
   const { data: versionData, isLoading: isVersionLoading } = useVersionDataQuery(selectedVersion || 0);
+
   const [initialDelta, setInitialDelta] = useState<Delta | null>(null);
 
   // Set initial delta when article loads
@@ -98,29 +99,29 @@ export const VersionManager = ({ articleId }: VersionMangerProps) => {
         <h3 className="text-lg font-medium mb-4">
           {selectedVersion 
             ? isVersionLoading 
-              ? 'Loading version...' 
-              : `Comparing Version ${selectedVersion} with current` 
-            : 'Current Version'}
+              ? 'Загрузка версии...' 
+              : ` ${ versionData? versionData.name : selectedVersion } ` 
+            : 'Актуальная версия'}
         </h3>
         
         {generateDiffDelta ? (
           <ReadonlyTextEditor height={'50vh'}
             key={selectedVersion || 'current'}
             value={generateDiffDelta} 
-            theme="bubble" 
+             
           />
         ) : (
           <div className="text-gray-500 italic">
             {isVersionLoading || isArticleLoading 
-              ? 'Loading content...' 
+              ? 'Загружаем статью...' 
               : initialDelta 
-                ? 'Select a version to compare' 
-                : 'No content available'}
+                ? 'Выберите версию, чтобы сравнить' 
+                : 'Нет информации о статье...'}
           </div>
         )}
       </div>
       <div className="md:w-1/3">
-        <VersionList  maxHeight={'50vh'}
+        <VersionList  maxHeight={'60vh'}
           articleId={articleId} 
           onVersionSelect={handleVersionSelect}
           selectedVersionId={selectedVersion || undefined}

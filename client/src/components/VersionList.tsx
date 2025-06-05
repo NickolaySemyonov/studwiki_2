@@ -51,19 +51,19 @@ export const VersionList = ({
   };
 
   if (isLoading) {
-    return <div className="p-4 text-center text-gray-500">Loading versions...</div>;
+    return <div className="p-4 text-center text-gray-500">Загрузка версий...</div>;
   }
 
   if (isError) {
     return (
       <div className="p-4 text-center text-red-500">
-        Error loading versions: {error instanceof Error ? error.message : "Unknown error"}
+        Ошибка при загузке версий: {error instanceof Error ? error.message : "Unknown error"}
       </div>
     );
   }
 
   if (!sortedVersions?.length) {
-    return <div className="p-4 text-center text-gray-500">No versions available</div>;
+    return <div className="p-4 text-center text-gray-500">Нет доступных версий</div>;
   }
 
   // Styles for the scrollable container
@@ -73,14 +73,14 @@ export const VersionList = ({
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="border rounded-lg overflow-hidden bg-white">
       <div className="bg-gray-50 p-3 border-b flex justify-between items-center">
-        <h3 className="font-medium text-black">Article Versions</h3>
+        <h3 className="font-medium text-black">Версии статьи</h3>
         <button 
           onClick={toggleSortMethod}
           className="text-xs text-blue-600 hover:text-blue-800 hover:underline"
         >
-          Sort by: {sortMethod === 'date' ? 'Date' : 'ID'}
+          Отсортировать: {sortMethod === 'date' ? 'Date' : 'ID'}
         </button>
       </div>
       
@@ -89,7 +89,7 @@ export const VersionList = ({
           {sortedVersions.map((version) => (
             <li 
               key={version.id} 
-              className={`p-3 group ${version.active ? "bg-gray-800" : "bg-white"} ${
+              className={`p-3 group mb-1 ${version.active ? "bg-gray-800" : "bg-white"} ${
                 version.id === selectedVersionId ? "ring-2 ring-indigo-500" : ""
               }`}
             >
@@ -102,18 +102,18 @@ export const VersionList = ({
                     <span className={`font-medium ${
                       version.active ? "text-white" : "text-black"
                     }`}>
-                      Version {version.id}
+                      Версия от {version.date}
                     </span>
                     {version.active && (
                       <span className="ml-2 px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                        Current
+                        Актуальная
                       </span>
                     )}
                   </div>
                   <div className={`text-sm ${
                     version.active ? "text-gray-300" : "text-gray-500"
                   }`}>
-                    {new Date(version.date).toLocaleString()}
+                    {/* {new Date(version.date).toLocaleString()} */}
                   </div>
                 </div>
                 
@@ -132,7 +132,7 @@ export const VersionList = ({
                         : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
                     }`}
                   >
-                    {rollbackInProgress === version.id ? 'Restoring...' : 'Restore'}
+                    {rollbackInProgress === version.id ? 'Восставнавливаем...' : 'Восстановить'}
                   </button>
                 )}
               </div>

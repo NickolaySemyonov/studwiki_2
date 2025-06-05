@@ -5,7 +5,7 @@ import { getArticle, getVersion, getVersionsMeta, rollBackVersion } from "../ser
 
 
 
-export const useArticleQuery = (articleId: number) => {
+export const useArticleQuery = (articleId: number|undefined) => {
   return useQuery<IArticle>({
     queryKey: ['articles', articleId], 
     queryFn: () => getArticle(articleId), 

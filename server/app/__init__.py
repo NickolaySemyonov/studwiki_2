@@ -20,7 +20,7 @@ app.register_blueprint(sections_bp, url_prefix="/api.sections")
 app.register_blueprint(articles_bp, url_prefix="/api.articles")
 app.register_blueprint(auth_bp, url_prefix="/api.auth")
 
-#CORS(app)
+
 CORS(app, supports_credentials=True, resources={
     r"/api/*": {
         "origins": ["http://localhost:5173"],  # URL вашего React приложения

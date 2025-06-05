@@ -2,6 +2,8 @@ import { MainLayout } from './layouts/MainLayout';
 import { useArticleQuery } from '../hooks/articleQueries';
 import { EditForm } from './EditForm';
 import { CustomLink } from '../components/ui/CustomLink';
+import { CustomNavLink } from '../components/ui/CustomNavLink';
+import { BackIcon } from '../components/ui/Icons';
 
 interface ArticleEditorProps{
     articleId:number
@@ -12,15 +14,16 @@ export const EditArticlePage: React.FC<ArticleEditorProps>= ({articleId}) => {
     const { data: article, isLoading, isError } = useArticleQuery(articleId);
     
 
-    if (isLoading) return <div>Loading article...</div>;
-    if (isError) return <div>Error loading article</div>;
-    if (!article) return <MainLayout><div>Article not found</div></MainLayout>;
+    if (isLoading) return <div>Статья загружается...</div>;
+    if (isError) return <div>При загрузке статьи возникла ошибка</div>;
+    if (!article) return <MainLayout><div>Статья не найдена</div></MainLayout>;
 
     return (
-        <>
-            <h1 className="text-2xl font-bold mb-4">Article Editor</h1>
+        <>  
+            
+            
             <EditForm {...article}/>
-            <CustomLink to={`/version_mgr/${articleId}`}></CustomLink>
+           
         </>
     );
 };

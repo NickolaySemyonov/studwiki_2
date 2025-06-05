@@ -9,6 +9,7 @@ export const useCreateArticleMutation = () => {
   return useMutation({
     mutationFn: createArticle,
     onSuccess: (message) => {
+      queryClient.invalidateQueries({queryKey:['section',1]})
       // Invalidate any queries that might be affected by this mutation
       // For example, if you have a list of articles:
       //queryClient.invalidateQueries({queryKey:['articles']});

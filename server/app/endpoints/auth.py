@@ -16,15 +16,13 @@ def login():
         return jsonify({
             'error': 'You are already logged in'
         }), 403
-    # Create form from JSON data
     form = LoginForm(data=request.get_json())
-    # Validate form
+    
     if not form.validate():
         return jsonify({
             'error': str(form.errors)
         }), 400
     
-    # Find user by email
     user, pwhash, err_message = User.find_user_by_email(form.email.data)
     
     if err_message:
@@ -32,13 +30,11 @@ def login():
             'error': err_message
         }), 401
     
-    # Check password
     if not check_password_hash(pwhash, form.password.data):
         return jsonify({
             'error': 'Invalid credentials'
         }), 401
     
-    # Login user
     login_user(user)
     
     return jsonify({

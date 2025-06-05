@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_login import login_required
 
 from ..models.versionData import VersionData
 from ..models.versionMetadata import VersionMetadata
@@ -6,7 +7,7 @@ from ..models.articleCurrent import ArticleCurrent
 from ..models.article import Article
 articles_bp = Blueprint('articles', __name__)
 
-
+@login_required
 @articles_bp.route('/create', methods=['POST'])
 def create_article():
 
@@ -28,7 +29,7 @@ def create_article():
         "message": "success"
     }), 201
 
-
+@login_required
 @articles_bp.route('/article', methods=['GET'])
 def get_article():
 
@@ -48,7 +49,7 @@ def get_article():
     })
     
 
-
+@login_required
 @articles_bp.route('/edit',methods=['POST'])
 def edit_article():
     data = request.get_json()
@@ -69,7 +70,7 @@ def edit_article():
     
     return jsonify({'message': 'success'})
 
-
+@login_required
 @articles_bp.route('/rollback', methods=['POST'])
 def rollback_version():
   
@@ -86,7 +87,7 @@ def rollback_version():
     
     return jsonify({'message': 'success'})
 
-
+@login_required
 @articles_bp.route('/versions', methods=['GET'])
 def get_versions_metadata():
 
@@ -107,7 +108,7 @@ def get_versions_metadata():
     })
         
 
-
+@login_required
 @articles_bp.route('/version', methods=['GET'])
 def get_version_data():
     

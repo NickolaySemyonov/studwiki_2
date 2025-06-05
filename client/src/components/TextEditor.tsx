@@ -73,8 +73,8 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
         display: 'flex',
         flexDirection: 'column',
         height: typeof height === 'number' ? `${height}px` : height,
-        border: '1px solid #ccc',
-        borderRadius: '4px',
+        // border: '1px solid #ccc',
+        // borderRadius: '4px',
       }}>
         <ReactQuill
           ref={quillRef}
@@ -90,6 +90,7 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
             flexDirection: 'column',
             flex: 1,
             overflow: 'hidden',
+            border:'none'
           }}
           bounds={'.quill-container'}
         />

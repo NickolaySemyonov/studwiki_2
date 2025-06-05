@@ -36,7 +36,7 @@ export const LoginPage = () => {
       // Redirect on success
       navigate('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      setError(err instanceof Error ? err.message : 'Ошибка входа');
     }
   };
 
@@ -51,8 +51,8 @@ export const LoginPage = () => {
     <div className="bg-gray-800 rounded-lg shadow-xl overflow-hidden p-8">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white">Welcome Back</h2>
-        <p className="mt-2 text-gray-400">Sign in to your account</p>
+        <h2 className="text-3xl font-bold text-white">Добро пожаловать</h2>
+        <p className="mt-2 text-gray-400">Войти в аккаунт</p>
       </div>
 
       {/* Error Message */}
@@ -94,29 +94,7 @@ export const LoginPage = () => {
           />
         </div>
 
-        {/* Remember Me & Forgot Password */}
-        {/* <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-600 rounded bg-gray-700"
-            />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
-              Remember me
-            </label>
-          </div>
-          <div className="text-sm">
-            <Link 
-              to="/forgot-password" 
-              className="font-medium text-indigo-400 hover:text-indigo-300"
-            >
-              Forgot password?
-            </Link>
-          </div>
-        </div> */}
-
+       
         {/* Submit Button */}
         <button
           type="submit"
@@ -129,10 +107,10 @@ export const LoginPage = () => {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              Signing in...
+              Вход...
             </>
           ) : (
-            'Sign In'
+            'Войти'
           )}
         </button>
       </form>
@@ -140,12 +118,12 @@ export const LoginPage = () => {
       {/* Registration Link */}
       <div className="mt-6 text-center">
         <p className="text-gray-400 text-sm">
-          Don't have an account?{' '}
+          Еще нет аккаунта?{' '}
           <Link 
             to="/register" 
             className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
           >
-            Create one
+            Создать
           </Link>
         </p>
       </div>

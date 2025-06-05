@@ -21,21 +21,21 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-full h-full bg-gray-800 flex flex-col">
 
           <div className="p-4 border-b border-gray-700 flex justify-between items-center min-h-20">
-            <h2 className="text-xl font-bold text-indigo-400">Dashboard</h2>
+            <h2 className="text-xl font-bold text-indigo-400">СтудВики</h2>
             <CustomBtn onClick={ () => setSidebarOpen(false) } > <ExitIcon/> </CustomBtn>
           </div>
 
           <nav className="p-4 space-y-2 flex-1 overflow-y-auto">
             <CustomNavLink to="/dashboard" onClick={() => setSidebarOpen(false) } > 
-              <HomeIcon/> Overview  
+              <HomeIcon/> Главная  
             </CustomNavLink>
 
             <CustomNavLink to="/sections" onClick={() => setSidebarOpen(false) }> 
-              <SectionsIcon/> Sections 
+              <SectionsIcon/> К разделам 
             </CustomNavLink>
 
             <CustomNavLink to="/editor" onClick={() => setSidebarOpen(false) } > 
-              <EditIcon/> Editor 
+              <EditIcon/> Новая статья 
             </CustomNavLink>
 
             {/* <CustomNavLink to="/articles" onClick={() => setSidebarOpen(false) } > 
@@ -52,19 +52,19 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Desktop Sidebar (Original) */}
         <aside className="w-64 bg-gray-800 border-r border-gray-700 hidden md:block ">
           <div className="p-4 border-b border-gray-700 flex justify-between items-center min-h-20">
-            <h2 className="text-xl font-bold text-indigo-400">Dashboard</h2>
+            <h2 className="text-xl font-bold text-indigo-400">СтудВики</h2>
           </div>
           <nav className="p-4 space-y-2">
             <CustomNavLink to="/dashboard" > 
-              <HomeIcon/> Overview  
+              <HomeIcon/> Главная  
             </CustomNavLink>
             
             <CustomNavLink to="/sections"> 
-              <SectionsIcon/> Sections 
+              <SectionsIcon/> К разделам
             </CustomNavLink>
 
             <CustomNavLink to="/editor"> 
-              <EditIcon/> Editor 
+              <EditIcon/> Новая статья 
             </CustomNavLink>
 
             {/* <CustomNavLink to="/articles"> 
@@ -80,14 +80,14 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
           <header className="bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center min-h-20">
             <div className="flex items-center space-x-4">
               <CustomBtn onClick={ () => setSidebarOpen(true) } className='md:hidden'> <BurgerIcon/> </CustomBtn>
-              <h1 className="text-2xl font-semibold">Hello, <span className="text-indigo-400">{user?.nickname || 'User'}</span> 👋</h1>
+              <h1 className="text-2xl font-semibold">Пользователь: <span className="text-indigo-400">{user?.nickname || 'User'}</span></h1>
             </div>
             <button
               onClick={() => logout()}
               disabled={isLoggingOut}
               className="flex items-center px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-50"
             >
-              {isLoggingOut ? 'Signing Out...' : 'Sign Out'}
+              {isLoggingOut ? 'Выход...' : 'Выйти'}
             </button>
           </header>
 

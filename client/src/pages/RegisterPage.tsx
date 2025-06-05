@@ -39,7 +39,7 @@ export const RegisterPage = () => {
       // Redirect on success
       navigate('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed');
+      setError(err instanceof Error ? err.message : 'Ошибка при регистрации');
     }
   };
 
@@ -54,8 +54,8 @@ export const RegisterPage = () => {
     <div className="bg-gray-800 rounded-lg shadow-xl overflow-hidden p-8">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white">Create Account</h2>
-        <p className="mt-2 text-gray-400">Join our community today</p>
+        <h2 className="text-3xl font-bold text-white">Создайте аккаунт</h2>
+        <p className="mt-2 text-gray-400">Присоединяйтесь к СтудВики</p>
       </div>
 
       {/* Error Message */}
@@ -139,10 +139,10 @@ export const RegisterPage = () => {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              Creating Account...
+              Создаем аккаунт...
             </>
           ) : (
-            'Register Now'
+            'Зарегистрироваться'
           )}
         </button>
       </form>
@@ -150,12 +150,12 @@ export const RegisterPage = () => {
       {/* Login Link */}
       <div className="mt-6 text-center">
         <p className="text-gray-400 text-sm">
-          Already have an account?{' '}
+          Уже есть аккаунт?{' '}
           <Link 
             to="/login" 
             className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
           >
-            Sign in
+            Вход
           </Link>
         </p>
       </div>

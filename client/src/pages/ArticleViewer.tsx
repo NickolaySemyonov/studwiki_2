@@ -3,6 +3,8 @@ import { useArticleQuery } from '../hooks/articleQueries';
 import { ReadonlyTextEditor } from '../components/ReadonlyTextEditor';
 import { Delta } from 'quill';
 import { CustomLink } from '../components/ui/CustomLink';
+import { CustomNavLink } from '../components/ui/CustomNavLink';
+import { BackIcon } from '../components/ui/Icons';
 
 
 interface ArticleViewerProps{
@@ -25,38 +27,48 @@ export const ArticleViewer: React.FC<ArticleViewerProps> = ({articleId}) => {
     }
   }, [article?.quillDelta]);
 
-  if (isLoading) return <div>Loading article...</div>;
-  if (isError) return <div>Error loading article</div>;
-  if (!article) return <div>Article not found</div>;
+  if (isLoading) return <div>Загрузка статьи...</div>;
+  if (isError) return <div>Ошибка при загрузке статьи</div>;
+  if (!article) return <div>Статья не найдена</div>;
 
-  return (
-    <div className="article-container">
-      <h1>{article.name}</h1>
-      <div className="article-meta">
-        <span className='mr-3'>By {article.authorNickname}</span>
-        <span className='mr-3'>Last updated: {new Date(article.lastUpdated).toLocaleDateString()}</span>
-        {article.lastEditorNickname && (
-          <span>Last edited by: {article.lastEditorNickname}</span>
-        )}
-      </div>
-
-      <div className="article-content bg-gray-200 text-black">
-        <ReadonlyTextEditor height={'60vh'}
-          value={deltaContent}
-          theme="snow"
-        />
-      </div>
-      <CustomLink to={`/editor/${articleId}`}>
-        Edit
-      
-      </CustomLink>
-
-      {article.commenting && (
-        <div className="comments-section">
-          {/* Your comments component would go here */}
+    return (
+    <>
+      <div className="article-container max-w-6xl mx-auto space-y-4">
+        <div className="flex items-center gap-4 mb-6">
+          <CustomNavLink to={`/sections/${article.sectionId}`}>
+            <BackIcon /> Назад
+          </CustomNavLink>
+          <h1 className="text-2xl font-bold text-indigo-600">
+            {article.name}
+          </h1>
         </div>
-      )}
-    </div>
+
+        <div className="article-content bg-white text-gray-800 rounded-lg border border-gray-200 shadow-sm p-6 mb-4">
+          <ReadonlyTextEditor
+            height={'60vh'}
+            value={deltaContent}
+            theme="snow" />
+        </div>
+
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+          <div className="article-meta text-sm text-gray-500">
+            <span className='mr-3'>Автор: <span className="font-medium text-indigo-600">{article.authorNickname}</span></span>
+            <span className=''>Последнее изменение: <span className="font-medium text-indigo-600">{new Date(article.lastUpdated).toLocaleDateString()}</span></span>
+            <span> от пользователя <span className="font-medium text-indigo-600">{article.lastEditorNickname}</span></span>
+          </div>
+          <div className='flex gap-3'>
+            <CustomLink
+              to={`/version_mgr/${articleId}`}>
+              Управление версиями
+            </CustomLink>
+            <CustomLink
+              to={`/editor/${articleId}`}
+            >
+              Редактировать
+            </CustomLink>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
-

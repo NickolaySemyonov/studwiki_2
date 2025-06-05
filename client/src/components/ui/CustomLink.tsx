@@ -15,7 +15,7 @@ export const CustomLink: React.FC<LinkProps> = ({
     return(
         <Link
             to={to}
-            className="text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
+            className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200 shadow-sm"
             onClick={onClick}
         >
             {children || 'It`s a link'}

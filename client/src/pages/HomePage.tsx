@@ -14,11 +14,11 @@ export const HomePage = () => {
         {/* App Logo/Title */}
         <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
-            Welcome to <span className="text-indigo-400">StudWiki</span>
+            Добро пожаловать на <span className="text-indigo-400">СтудВики</span>
             </h1>
-            <p className="text-gray-400 max-w-lg mx-auto">
+            {/* <p className="text-gray-400 max-w-lg mx-auto">
             The ultimate solution for your needs. Get started by creating an account or signing in.
-            </p>
+            </p> */}
         </div>
 
         {/* Auth Options */}
@@ -27,24 +27,24 @@ export const HomePage = () => {
             to="/login"
             className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-900 text-center"
             >
-            Sign In
+            Вход
             </Link>
             <Link
             to="/register"
             className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 text-center"
             >
-            Create Account
+            Регистрация
             </Link>
         </div>
 
         {/* Features Preview */}
         <div className="mt-16 w-full max-w-6xl px-4">
-  <h2 className="text-2xl font-bold text-white mb-8 text-center">
+  {/* <h2 className="text-2xl font-bold text-white mb-8 text-center">
     Supercharge Your Study Sessions
-  </h2>
+  </h2> */}
   
   {/* Improved Features Grid */}
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     {[
       {
         icon: '📚',
@@ -80,7 +80,7 @@ export const HomePage = () => {
         <p className="text-gray-300">{feature.description}</p>
       </div>
     ))}
-  </div>
+  </div> */}
 </div>
     </div>
   );

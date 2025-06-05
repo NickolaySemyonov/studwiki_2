@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getArticlesMeta, getSections } from "../services/SectionService";
-import type { IArticleMeta } from "../services/types";
+import { getArticlesMeta, getSections, getSection } from "../services/SectionService";
+import type { IArticleMeta, ISectionMeta } from "../services/types";
 
 export const useSectionsQuery = () => {
   return useQuery({
@@ -8,6 +8,16 @@ export const useSectionsQuery = () => {
     queryFn: getSections
   });
 };
+
+export const useSectionQuery = (sectionId:number|undefined) => {
+  return useQuery<ISectionMeta>({
+    queryKey: ['section-meta', sectionId],
+    queryFn: () => getSection(sectionId),
+    enabled: !!sectionId, 
+  });
+};
+
+
 
 export const useArticlesMetaQuery = (sectionId: number) => {
   return useQuery<IArticleMeta[]>({

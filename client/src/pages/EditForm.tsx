@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import type { TextEditorHandle } from "../components/TextEditor";
-import type { IArticle, IArticleEdit } from "../services/types";
+import type { IArticle } from "../services/types";
 import { Delta } from "quill";
 import TextEditor from "../components/TextEditor";
 import { useAuth } from "../contexts/AuthContext";
 import { useEditArticleMutation } from "../hooks/editorQueries";
+import { CustomNavLink } from "../components/ui/CustomNavLink";
+import { BackIcon } from "../components/ui/Icons";
 
 export const EditForm: React.FC<IArticle> = (article) => {
     const { user } = useAuth();
@@ -42,24 +44,34 @@ export const EditForm: React.FC<IArticle> = (article) => {
     };
 
     return (
-        <div className="space-y-4 max-w-2xl mx-auto">
-            <div className="form-group">
-                <label htmlFor="articleName" className="block mb-1 font-medium">
+        <div className="space-y-4 max-w-6xl mx-auto ">
+            <div className="form-group ">
+            <div className="flex items-center gap-4 mb-6">
+                <CustomNavLink to={`/articles/${article.articleId}`}>
+                    <BackIcon /> Назад
+                </CustomNavLink>
+                <h1 className="text-2xl font-bold ">Редактирование: </h1><h1 className="text-2xl font-bold text-indigo-600">
+                    {article.name}
+                </h1>
+            </div>
+                {/* <label htmlFor="articleName" className="block mb-1 font-medium">
                     Article Title
-                </label>
+                </label> */}
                 <input
                     type="text"
                     id="articleName"
                     value={articleName}
                     onChange={(e) => setArticleName(e.target.value)}
-                    className="w-full p-2 border rounded bg-gray-200 text-black"
+                    className="w-full  bg-white text-black rounded-lg border p-2 px-4"
                     required
+                    minLength={1}
                     disabled={isPending}
+                    placeholder="Заголовок"
                 />
             </div>
-
-            <div className="form-group bg-gray-200 text-black">
-                <label className="block mb-1 font-medium">Content</label>
+            
+            <div className="form-group bg-white text-black rounded-lg border p-4">
+                {/* <label className="block mb-1 font-medium">Content</label> */}
                 <TextEditor   height={'50vh'}
                     ref={editorRef} 
                     value={initialDelta} 
@@ -77,7 +89,7 @@ export const EditForm: React.FC<IArticle> = (article) => {
                         className="h-4 w-4"
                         disabled={isPending}
                     />
-                    <span>Allow Comments</span>
+                    <span>Разрешить комментирование</span>
                 </label>
 
                 <label className="flex items-center space-x-2">
@@ -88,7 +100,7 @@ export const EditForm: React.FC<IArticle> = (article) => {
                         className="h-4 w-4"
                         disabled={isPending}
                     />
-                    <span>Hide Article</span>
+                    <span>Скрыть статью</span>
                 </label>
             </div>
 
@@ -119,7 +131,7 @@ export const EditForm: React.FC<IArticle> = (article) => {
                     className={`px-4 py-2 rounded-md text-white font-medium transition-colors ${
                         isPending 
                             ? 'bg-blue-400 cursor-not-allowed'
-                            : 'bg-blue-600 hover:bg-blue-700'
+                            : 'bg-indigo-600 hover:bg-indigo-700'
                     }`}
                 >
                     {isPending ? (
@@ -131,13 +143,12 @@ export const EditForm: React.FC<IArticle> = (article) => {
                             Saving...
                         </span>
                     ) : (
-                        'Save Changes'
+                        'Сохранить изменения'
                     )}
                 </button>
             </div>
 
-            {/* Additional success actions */}
-            {isSuccess && (
+            {/* {isSuccess && (
                 <div className="mt-4 p-3 bg-green-50 text-green-700 rounded-md">
                     <p>Your changes have been successfully saved.</p>
                     <div className="mt-2 flex space-x-3">
@@ -149,7 +160,7 @@ export const EditForm: React.FC<IArticle> = (article) => {
                         </button>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

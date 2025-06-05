@@ -17,6 +17,21 @@ export const getSections = async(): Promise<ISectionMeta[]> => {
 
 };
 
+export const getSection = async(sectionId:number|undefined): Promise<ISectionMeta> => {
+  const response = await axios.get<{section: ISectionMeta, error?: string}>(
+    `${baseURL}`,
+    {
+      params: { section_id: sectionId }, 
+      withCredentials: true 
+    }
+  );
+  if (response.data.error) {
+    throw new Error(response.data.error);
+  }
+  return response.data.section;
+
+};
+
 
 export const getArticlesMeta = async(sectionId:number): Promise<IArticleMeta[]> => {
   const response = await axios.get<{articlesMetadata: IArticleMeta[], error?: string}>(

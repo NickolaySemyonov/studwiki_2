@@ -1,17 +1,29 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TextEditor from '../components/TextEditor';
 import type { TextEditorHandle } from '../components/TextEditor';
 import { useCreateArticleMutation } from '../hooks/editorQueries';
 import { useAuth } from '../contexts/AuthContext';
 
 import type { INewArticle } from '../services/types';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateArticlePage: React.FC = () => {
   const{user} = useAuth()
   const editorRef = useRef<TextEditorHandle>(null);
   const {mutate: createArticle, isPending, isError, error,isSuccess, data} = useCreateArticleMutation();
-
+   const navigate = useNavigate();
   const [articleName, setArticleName] = useState('');
+
+ useEffect(() => {
+    if (isSuccess) {
+      // You can add a small delay if you want the success message to be visible
+      const timer = setTimeout(() => {
+        navigate('/sections/1');
+      }, 1500); // 1.5 second delay
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, navigate]);
 
   const handleSubmit = async () => {
     if (!editorRef.current) return;
@@ -19,11 +31,10 @@ export const CreateArticlePage: React.FC = () => {
     const delta = editorRef.current.getDelta();
     if (!delta) return;
 
-
-    const newArticle:INewArticle = {
-      sectionId:1, 
+    const newArticle: INewArticle = {
+      sectionId: 1, 
       authorId: Number(user?.id), 
-      name:articleName,
+      name: articleName,
       quillDelta: JSON.stringify(delta)
     }
 
@@ -31,19 +42,19 @@ export const CreateArticlePage: React.FC = () => {
   };
 
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-4">Article Editor</h1>
+    <div className="space-y-4 max-w-6xl mx-auto ">
+      <h1 className="text-2xl font-bold mb-4">Новая статья</h1>
 
-        <label htmlFor="article-name" className="block text-sm font-medium text-gray-700 mb-1">
-          Article Name
-        </label>
+        {/* <label htmlFor="article-name" className="block text-sm font-medium text-gray-700 mb-1">
+          Название статьи
+        </label> */}
         <input
           type="text"
           id="article-name"
           value={articleName}
           onChange={(e) => setArticleName(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          placeholder="Enter article name"
+          placeholder="Название статьи"
           maxLength={100} 
         />
         {articleName.length > 80 && (
@@ -52,7 +63,7 @@ export const CreateArticlePage: React.FC = () => {
           </p>
         )}
       <div className='bg-gray-100 p-4 rounded-lg mb-4 text-black'>
-        <TextEditor ref={editorRef} />
+        <TextEditor ref={editorRef} height={'50vh'} />
       </div>
       
       <div className="flex items-center gap-4">
@@ -72,7 +83,7 @@ export const CreateArticlePage: React.FC = () => {
               Saving...
             </>
           ) : (
-            'Save Article'
+            'Сохранить статью'
           )}
         </button>
         
@@ -94,6 +105,6 @@ export const CreateArticlePage: React.FC = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
