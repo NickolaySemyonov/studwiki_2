@@ -7,6 +7,7 @@ interface ReadonlyTextEditorProps {
   value?: string | Delta;
   placeholder?: string;
   theme?: 'snow' | 'bubble';
+  height?: string | number; // Add height prop
 }
 
 export interface ReadonlyTextEditorHandle {
@@ -15,7 +16,7 @@ export interface ReadonlyTextEditorHandle {
 }
 
 export const ReadonlyTextEditor = forwardRef<ReadonlyTextEditorHandle, ReadonlyTextEditorProps>(
-  ({ value = '', placeholder = '', theme = 'snow' }, ref) => {
+  ({ value = '', placeholder = '', theme = 'snow', height = 'auto' }, ref) => {
     const quillRef = useRef<ReactQuill>(null);
 
     // Initialize or update the editor content
@@ -25,10 +26,8 @@ export const ReadonlyTextEditor = forwardRef<ReadonlyTextEditorHandle, ReadonlyT
       const editor = quillRef.current.getEditor();
       
       if (value instanceof Delta) {
-        // For Delta objects
         editor.setContents(value);
       } else if (typeof value === 'string') {
-        // For HTML strings
         editor.clipboard.dangerouslyPasteHTML(value);
       }
     }, [value]);
@@ -45,16 +44,23 @@ export const ReadonlyTextEditor = forwardRef<ReadonlyTextEditorHandle, ReadonlyT
       }
     };
 
+    // Styles for the editor container
+    const editorStyles = {
+      height: typeof height === 'number' ? `${height}px` : height,
+      overflowY: 'auto' as const,
+    };
+
     return (
-      <ReactQuill
-        ref={quillRef}
-        theme={theme}
-        readOnly={true}
-        modules={modules}
-        placeholder={placeholder}
-        value={''} // Start with empty value, we'll set content via useEffect
-      />
+      <div style={editorStyles}>
+        <ReactQuill
+          ref={quillRef}
+          theme={theme}
+          readOnly={true}
+          modules={modules}
+          placeholder={placeholder}
+          value={''} // Start with empty value
+        />
+      </div>
     );
   }
 );
-

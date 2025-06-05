@@ -7,7 +7,8 @@ interface TextEditorProps {
   value?: string | Delta;
   onChange?: (content: string, delta: Delta, source: string) => void;
   placeholder?: string;
-  readOnly?:boolean;
+  readOnly?: boolean;
+  height?: string | number;
 }
 
 export interface TextEditorHandle {
@@ -17,12 +18,11 @@ export interface TextEditorHandle {
 }
 
 const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
-  ({ value = '', onChange, placeholder = 'Write something...', readOnly = false }, ref) => {
+  ({ value = '', onChange, placeholder = 'Write something...', readOnly = false, height = '300px' }, ref) => {
     const [editorReadOnly, setEditorReadOnly] = React.useState(readOnly);
     const [editorValue, setEditorValue] = React.useState(value);
     const quillRef = React.useRef<ReactQuill>(null);
 
-    // Expose editor methods via ref
     useImperativeHandle(ref, () => ({
       getEditor: () => quillRef.current,
       getDelta: () => quillRef.current?.getEditor().getContents(),
@@ -32,14 +32,13 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
     React.useEffect(() => {
       setEditorValue(value);
     }, [value]);
+    
     React.useEffect(() => {
       setEditorReadOnly(readOnly);
     }, [readOnly]);
 
-    const handleChange = (content: string, delta: Delta, source: string, editor: ReactQuill.UnprivilegedEditor) => {
+    const handleChange = (content: string, delta: Delta, source: string) => {
       setEditorValue(content);
-      
-      // Call onChange with all relevant information
       if (onChange) {
         const quill = quillRef.current?.getEditor();
         const fullDelta = quill?.getContents();
@@ -70,16 +69,31 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
     ];
 
     return (
-      <ReactQuill
-        ref={quillRef}
-        theme="snow"
-        value={editorValue}
-        onChange={handleChange}
-        modules={modules}
-        formats={formats}
-        placeholder={placeholder}
-        readOnly={editorReadOnly}
-      />
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: typeof height === 'number' ? `${height}px` : height,
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+      }}>
+        <ReactQuill
+          ref={quillRef}
+          theme="snow"
+          value={editorValue}
+          onChange={handleChange}
+          modules={modules}
+          formats={formats}
+          placeholder={placeholder}
+          readOnly={editorReadOnly}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            overflow: 'hidden',
+          }}
+          bounds={'.quill-container'}
+        />
+      </div>
     );
   }
 );

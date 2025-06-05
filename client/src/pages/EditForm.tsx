@@ -60,7 +60,7 @@ export const EditForm: React.FC<IArticle> = (article) => {
 
             <div className="form-group bg-gray-200 text-black">
                 <label className="block mb-1 font-medium">Content</label>
-                <TextEditor 
+                <TextEditor   height={'50vh'}
                     ref={editorRef} 
                     value={initialDelta} 
                     placeholder="Write your article content..."

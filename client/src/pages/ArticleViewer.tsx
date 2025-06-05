@@ -41,7 +41,7 @@ export const ArticleViewer: React.FC<ArticleViewerProps> = ({articleId}) => {
       </div>
 
       <div className="article-content bg-gray-200 text-black">
-        <ReadonlyTextEditor
+        <ReadonlyTextEditor height={'60vh'}
           value={deltaContent}
           theme="snow"
         />

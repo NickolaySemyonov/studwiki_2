@@ -6,6 +6,7 @@ interface VersionListProps {
   articleId: number;
   onVersionSelect: (version: IVersionMeta) => void;
   selectedVersionId?: number;
+  maxHeight?: string | number; // Add maxHeight prop for scroll control
 }
 
 type SortMethod = 'date' | 'id';
@@ -13,7 +14,8 @@ type SortMethod = 'date' | 'id';
 export const VersionList = ({ 
   articleId, 
   onVersionSelect,
-  selectedVersionId 
+  selectedVersionId,
+  maxHeight = '400px' // Default max height
 }: VersionListProps) => {
   const { data: versions, isLoading, isError, error, refetch } = useVersionMetaQuery(articleId);
   const [sortMethod, setSortMethod] = useState<SortMethod>('date');
@@ -64,6 +66,12 @@ export const VersionList = ({
     return <div className="p-4 text-center text-gray-500">No versions available</div>;
   }
 
+  // Styles for the scrollable container
+  const scrollableContainerStyle = {
+    maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight,
+    overflowY: 'auto' as const,
+  };
+
   return (
     <div className="border rounded-lg overflow-hidden">
       <div className="bg-gray-50 p-3 border-b flex justify-between items-center">
@@ -76,60 +84,62 @@ export const VersionList = ({
         </button>
       </div>
       
-      <ul className="divide-y">
-        {sortedVersions.map((version) => (
-          <li 
-            key={version.id} 
-            className={`p-3 group ${version.active ? "bg-gray-800" : "bg-white"} ${
-              version.id === selectedVersionId ? "ring-2 ring-indigo-500" : ""
-            }`}
-          >
-            <div className="flex justify-between items-start">
-              <div 
-                className="flex-1 cursor-pointer"
-                onClick={() => onVersionSelect(version)}
-              >
-                <div className="flex items-center">
-                  <span className={`font-medium ${
-                    version.active ? "text-white" : "text-black"
-                  }`}>
-                    Version {version.id}
-                  </span>
-                  {version.active && (
-                    <span className="ml-2 px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                      Current
-                    </span>
-                  )}
-                </div>
-                <div className={`text-sm ${
-                  version.active ? "text-gray-300" : "text-gray-500"
-                }`}>
-                  {new Date(version.date).toLocaleString()}
-                </div>
-              </div>
-              
-              {!version.active && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (confirm(`Restore version ${version.id} from ${new Date(version.date).toLocaleDateString()}?`)) {
-                      handleRollback(version.id);
-                    }
-                  }}
-                  disabled={rollbackInProgress === version.id}
-                  className={`ml-2 px-3 py-1 text-xs rounded-md ${
-                    rollbackInProgress === version.id 
-                      ? "bg-gray-300 text-gray-600" 
-                      : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
-                  }`}
+      <div style={scrollableContainerStyle}> {/* Scrollable container */}
+        <ul className="divide-y">
+          {sortedVersions.map((version) => (
+            <li 
+              key={version.id} 
+              className={`p-3 group ${version.active ? "bg-gray-800" : "bg-white"} ${
+                version.id === selectedVersionId ? "ring-2 ring-indigo-500" : ""
+              }`}
+            >
+              <div className="flex justify-between items-start">
+                <div 
+                  className="flex-1 cursor-pointer"
+                  onClick={() => onVersionSelect(version)}
                 >
-                  {rollbackInProgress === version.id ? 'Restoring...' : 'Restore'}
-                </button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
+                  <div className="flex items-center">
+                    <span className={`font-medium ${
+                      version.active ? "text-white" : "text-black"
+                    }`}>
+                      Version {version.id}
+                    </span>
+                    {version.active && (
+                      <span className="ml-2 px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                        Current
+                      </span>
+                    )}
+                  </div>
+                  <div className={`text-sm ${
+                    version.active ? "text-gray-300" : "text-gray-500"
+                  }`}>
+                    {new Date(version.date).toLocaleString()}
+                  </div>
+                </div>
+                
+                {!version.active && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm(`Restore version ${version.id} from ${new Date(version.date).toLocaleDateString()}?`)) {
+                        handleRollback(version.id);
+                      }
+                    }}
+                    disabled={rollbackInProgress === version.id}
+                    className={`ml-2 px-3 py-1 text-xs rounded-md ${
+                      rollbackInProgress === version.id 
+                        ? "bg-gray-300 text-gray-600" 
+                        : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+                    }`}
+                  >
+                    {rollbackInProgress === version.id ? 'Restoring...' : 'Restore'}
+                  </button>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

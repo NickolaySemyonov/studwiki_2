@@ -20,7 +20,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <div className={`fixed inset-0 z-30 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:hidden transition-transform duration-300 ease-in-out`}>
         <div className="w-full h-full bg-gray-800 flex flex-col">
 
-          <div className="p-4 border-b border-gray-700 flex justify-between items-center">
+          <div className="p-4 border-b border-gray-700 flex justify-between items-center min-h-20">
             <h2 className="text-xl font-bold text-indigo-400">Dashboard</h2>
             <CustomBtn onClick={ () => setSidebarOpen(false) } > <ExitIcon/> </CustomBtn>
           </div>
@@ -50,8 +50,8 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Main Content Area */}
       <div className="flex flex-1">
         {/* Desktop Sidebar (Original) */}
-        <aside className="w-64 bg-gray-800 border-r border-gray-700 hidden md:block">
-          <div className="p-4 border-b border-gray-700">
+        <aside className="w-64 bg-gray-800 border-r border-gray-700 hidden md:block ">
+          <div className="p-4 border-b border-gray-700 flex justify-between items-center min-h-20">
             <h2 className="text-xl font-bold text-indigo-400">Dashboard</h2>
           </div>
           <nav className="p-4 space-y-2">
@@ -77,7 +77,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
         <main className="flex-1 overflow-y-auto">
           {/* Top Bar */}
-          <header className="bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center">
+          <header className="bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center min-h-20">
             <div className="flex items-center space-x-4">
               <CustomBtn onClick={ () => setSidebarOpen(true) } className='md:hidden'> <BurgerIcon/> </CustomBtn>
               <h1 className="text-2xl font-semibold">Hello, <span className="text-indigo-400">{user?.nickname || 'User'}</span> 👋</h1>
